@@ -1,0 +1,121 @@
+.skills-section {
+  padding: 80px 20px;
+  background: linear-gradient(to bottom, #0b0b0b, #111);
+  color: white;
+  text-align: center;
+}
+
+.skills-title {
+  font-size: 2.6rem;
+  margin-bottom: 50px;
+  color: #00ffcc;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 22px;
+  border-radius: 14px;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(40px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.skill-icon {
+  font-size: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.card h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #00e6b8;
+  margin-bottom: 4px;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #bbb;
+  line-height: 1.4;
+}
+
+/* Progress bar */
+.progress-wrap {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progress {
+  flex: 1;
+  height: 8px;
+  background: #333;
+  border-radius: 6px;
+  margin-right: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #00ffcc, #00bfff);
+  width: 0;
+  border-radius: 6px;
+  transition: width 1s ease;
+}
+
+.percent {
+  font-size: 0.9rem;
+  color: #00ffcc;
+}
+
+@media (max-width: 768px) {
+  .skills-title {
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .skill-icon {
+    font-size: 2.2rem;
+    width: 50px;
+    height: 50px;
+  }
+}
