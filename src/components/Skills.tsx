@@ -9,13 +9,18 @@ type Skill = {
 };
 
 const skills: Skill[] = [
-  { name: "HTML", desc: "Building the structure of websites", pct: 90  },
+  { name: "HTML", desc: "Building the structure of websites", pct: 90 },
   { name: "CSS", desc: "Styling and designing websites", pct: 85 },
-  { name: "React.js", desc: "Building dynamic and responsive UI", pct: 80 },
   { name: "JavaScript", desc: "Making websites interactive", pct: 85 },
-  { name: "Bootstrap", desc: "Responsive & mobile-first", pct: 75 },
+  { name: "React.js", desc: "Building dynamic and responsive UI", pct: 80 },
   { name: "Next.js", desc: "SSR & SSG", pct: 70 },
-  { name: "Node.js", desc: "Server-side JavaScript", pct: 65 },
+  { name: "Material UI (MUI)", desc: "React UI library", pct: 80 },
+  { name: "Bootstrap", desc: "Responsive & mobile-first", pct: 75 },
+  { name: "Python", desc: "Backend scripting & logic", pct: 80 },
+  { name: "Django", desc: "Full-stack web framework", pct: 75 },
+  { name: "Django REST API", desc: "Building scalable web services", pct: 85 },
+  { name: "SQLite", desc: "Relational database", pct: 70 },
+  { name: "PostgreSQL", desc: "Advanced relational database", pct: 70 },
 ];
 
 const Skills: React.FC = () => {
@@ -69,7 +74,7 @@ const Skills: React.FC = () => {
 
   return (
     <section aria-labelledby="skills-heading">
-      <h2 id="skills-heading" style={{ textAlign: "center", marginTop: 28 , fontSize: "2.9rem"}}>
+      <h2 id="skills-heading" style={{ textAlign: "center", marginTop: 28, fontSize: "2.9rem" }}>
         MY SKILLS
       </h2>
 

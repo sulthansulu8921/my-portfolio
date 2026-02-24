@@ -22,7 +22,7 @@ const Hero = () => {
           Hi, I’m <span>SULTHAN SHAFEER</span>
         </h1>
         <p data-aos="fade-up" data-aos-delay="400">
-          Front-End Developer passionate about crafting beautiful and
+          Full-Stack Developer passionate about crafting beautiful and
           functional websites.
         </p>
 

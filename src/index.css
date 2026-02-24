@@ -22,6 +22,7 @@ body {
   color: white;
   overflow-x: hidden;
   width: 100%;
+  margin-top: 50px;
 }
 
 /* Typography */
@@ -677,4 +678,8 @@ a:hover {
   .follow-grid {
     flex-direction: column;
   }
+}
+
+.follow-card{
+  margin-left: 5px;
 }
