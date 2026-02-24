@@ -12,20 +12,25 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import os
+import dj_database_url
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-eb1-px@x8sxjqkfwr=4j!kpakl2#o0$rx8e0=d%515e7-*!s=p'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-eb1-px@x8sxjqkfwr=4j!kpakl2#o0$rx8e0=d%515e7-*!s=p')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'projects',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +83,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -128,9 +135,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-]
+] + os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
 
-import os
+# Remove empty strings from cors origins just in case
+CORS_ALLOWED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin]
+# AWS S3 / Supabase Storage configuration
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL')
+AWS_S3_REGION_NAME = 'ap-northeast-1'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_FILE_OVERWRITE = False
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    
+    # Supabase uses path-style URLs: https://[URL]/storage/v1/object/public/[BUCKET_NAME]/
+    endpoint = AWS_S3_ENDPOINT_URL.split('//')[-1].replace('/s3', '')
+    AWS_S3_CUSTOM_DOMAIN = f"{endpoint}/object/public/{AWS_STORAGE_BUCKET_NAME}"
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
