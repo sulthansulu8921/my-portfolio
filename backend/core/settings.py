@@ -139,6 +139,11 @@ CORS_ALLOWED_ORIGINS = [
 
 # Remove empty strings from cors origins just in case
 CORS_ALLOWED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin]
+
+# If '*' is passed, allow all origins for now (we can lock this down later)
+if '*' in CORS_ALLOWED_ORIGINS:
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOWED_ORIGINS = []
 # AWS S3 / Supabase Storage configuration
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
