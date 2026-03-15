@@ -8,9 +8,7 @@ services:
     startCommand: gunicorn core.wsgi:application
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: my-portfolio-db
-          property: connectionString
+        sync: false # User must set this manually to their Supabase URL
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
@@ -34,7 +32,3 @@ services:
           type: web
           name: my-portfolio-backend
           property: host
-
-databases:
-  - name: my-portfolio-db
-    plan: free
