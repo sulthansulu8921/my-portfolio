@@ -9,7 +9,7 @@ const api = axios.create({
     },
 });
 
-export const getProjects = async () => {
+export const getProjects = async (): Promise<any[]> => {
     try {
         const response = await api.get('projects/');
         return response.data;
@@ -19,7 +19,7 @@ export const getProjects = async () => {
     }
 };
 
-export const submitContact = async (contactData) => {
+export const submitContact = async (contactData: { name: string; email: string; message: string }): Promise<any> => {
     try {
         const response = await api.post('contact/', contactData);
         return response.data;

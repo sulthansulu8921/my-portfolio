@@ -1,0 +1,224 @@
+.chat-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 245, 196, 0.4);
+}
+
+.chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    height: 500px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: rgba(10, 10, 10, 0.8) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+
+.chat-header {
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ai-avatar {
+    width: 35px;
+    height: 35px;
+    background: var(--accent-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.chat-header h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: #fff;
+}
+
+.online-status {
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.online-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.chat-header-actions button {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.chat-header-actions button:hover {
+    color: #fff;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message-wrap {
+    display: flex;
+    width: 100%;
+}
+
+.message-wrap.user {
+    justify-content: flex-end;
+}
+
+.message-bubble {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.message-bubble.ai {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e0e0e0;
+    border-bottom-left-radius: 4px;
+    border: 1px solid var(--glass-border);
+}
+
+.message-bubble.user {
+    background: var(--accent-primary);
+    color: #000;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-input-area {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.chat-input-area input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    padding: 8px 15px;
+    color: #fff;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.chat-input-area button {
+    background: transparent;
+    border: none;
+    color: var(--accent-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.chat-input-area button:disabled {
+    color: var(--text-dim);
+    cursor: not-allowed;
+}
+
+.chat-input-area button:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+/* Typing Indicator Animation */
+.typing span {
+    animation: blink 1.4s infinite both;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: .4s;
+}
+
+@keyframes blink {
+    0% {
+        opacity: .2;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .2;
+    }
+}
+
+/* Custom Scrollbar for Chat */
+.chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+@media (max-width: 450px) {
+    .chat-window {
+        width: calc(100% - 40px);
+        right: 20px;
+        bottom: 90px;
+        height: 450px;
+    }
+}

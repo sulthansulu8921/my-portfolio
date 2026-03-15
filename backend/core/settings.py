@@ -141,9 +141,11 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOWED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin]
 
 # If '*' is passed, allow all origins for now (we can lock this down later)
-if '*' in CORS_ALLOWED_ORIGINS:
+if '*' in CORS_ALLOWED_ORIGINS or DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ALLOWED_ORIGINS = []
+else:
+    CORS_ALLOW_ALL_ORIGINS = False
 # AWS S3 / Supabase Storage configuration
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
@@ -153,7 +155,12 @@ AWS_S3_REGION_NAME = 'ap-northeast-1'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_FILE_OVERWRITE = False
 
-if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+# Always define local media paths as a fallback
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Only use S3/Supabase storage in production (DEBUG=False)
+if not DEBUG and AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3.S3Storage",
@@ -162,10 +169,7 @@ if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
         },
     }
-    
+
     # Supabase uses path-style URLs: https://[URL]/storage/v1/object/public/[BUCKET_NAME]/
     endpoint = AWS_S3_ENDPOINT_URL.split('//')[-1].replace('/s3', '')
     AWS_S3_CUSTOM_DOMAIN = f"{endpoint}/object/public/{AWS_STORAGE_BUCKET_NAME}"
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'

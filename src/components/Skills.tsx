@@ -1,118 +1,86 @@
-// src/components/Skills.tsx
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import "../Skills.css";
 
 type Skill = {
   name: string;
   desc: string;
   pct: number;
+  category: string;
 };
 
 const skills: Skill[] = [
-  { name: "HTML", desc: "Building the structure of websites", pct: 90 },
-  { name: "CSS", desc: "Styling and designing websites", pct: 85 },
-  { name: "JavaScript", desc: "Making websites interactive", pct: 85 },
-  { name: "React.js", desc: "Building dynamic and responsive UI", pct: 80 },
-  { name: "Next.js", desc: "SSR & SSG", pct: 70 },
-  { name: "Material UI (MUI)", desc: "React UI library", pct: 80 },
-  { name: "Bootstrap", desc: "Responsive & mobile-first", pct: 75 },
-  { name: "Python", desc: "Backend scripting & logic", pct: 80 },
-  { name: "Django", desc: "Full-stack web framework", pct: 75 },
-  { name: "Django REST API", desc: "Building scalable web services", pct: 85 },
-  { name: "SQLite", desc: "Relational database", pct: 70 },
-  { name: "PostgreSQL", desc: "Advanced relational database", pct: 70 },
+  { name: "React.js", desc: "Building dynamic UI", pct: 90, category: "Frontend" },
+  { name: "TypeScript", desc: "Type-safe development", pct: 85, category: "Frontend" },
+  { name: "Material UI", desc: "Design system", pct: 90, category: "Frontend" },
+  { name: "Python", desc: "General purpose language", pct: 90, category: "Backend" },
+  { name: "Django", desc: "Python web framework", pct: 85, category: "Backend" },
+  { name: "PostgreSQL", desc: "Relational database", pct: 80, category: "Database" },
+  { name: "Firebase", desc: "Cloud backend & auth", pct: 75, category: "Database" },
+  { name: "Git & GitHub", desc: "Version control", pct: 85, category: "Tools" },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
+
 const Skills: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const cards = Array.from(container.querySelectorAll<HTMLElement>(".card"));
-    if (cards.length === 0) return;
-
-    const observers: IntersectionObserver[] = [];
-
-    cards.forEach((card, index) => {
-      const observer = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // add visible for CSS reveal
-              entry.target.classList.add("visible");
-
-              // animate progress
-              const progress = entry.target.querySelector<HTMLElement>(".progress");
-              const fill = progress?.querySelector<HTMLElement>("i");
-              const pctAttr = progress?.getAttribute("data-fill");
-              const pct = pctAttr ? Number(pctAttr) : 0;
-
-              if (fill) {
-                setTimeout(() => {
-                  fill.style.width = `${pct}%`;
-                }, 120 + index * 80); // small stagger
-              }
-
-              // stop observing after reveal
-              obs.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.16 }
-      );
-
-      observer.observe(card);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((o) => o.disconnect());
-    };
-  }, []);
-
   return (
-    <section aria-labelledby="skills-heading">
-      <h2 id="skills-heading" style={{ textAlign: "center", marginTop: 28, fontSize: "2.9rem" }}>
-        MY SKILLS
-      </h2>
+    <section className="skills-section" id="skills">
+      <div className="skills-container">
+        <motion.h2
+          className="section-title"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          My Expertise
+        </motion.h2>
 
-      <div ref={containerRef} className="cards-grid" style={{ marginTop: 20 }}>
-        {skills.map((s) => (
-          <article key={s.name} className="card reveal" aria-label={`${s.name} skill card`}>
-            <div className="card-row">
-              <div className="icon" aria-hidden>
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="3" />
-                  <path d="M7 7h10M7 12h10M7 17h10" />
-                </svg>
-              </div>
-
-              <div style={{ flex: 1 }}>
+        <motion.div
+          className="skills-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {skills.map((s) => (
+            <motion.div
+              key={s.name}
+              className="glass-card skill-card"
+              variants={itemVariants}
+            >
+              <div className="skill-info">
+                <span className="skill-category">{s.category}</span>
                 <h4>{s.name}</h4>
-                <small>{s.desc}</small>
-
-                <div className="progress-wrap">
-                  <div className="progress" data-fill={s.pct}>
-                    <i style={{ width: "0%" }} />
-                  </div>
-                  <div className="percent">{s.pct}%</div>
-                </div>
+                <p>{s.desc}</p>
               </div>
-            </div>
-          </article>
-        ))}
+
+              <div className="skill-progress-area">
+                <div className="skill-progress-bar">
+                  <motion.div
+                    className="skill-progress-fill"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${s.pct}%` }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                  />
+                </div>
+                <span className="skill-pct">{s.pct}%</span>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-scroll";
 import "../Header.css";
 
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="navbar">
+    <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-container">
-        <div className="nav-logo">Sulthan Shafeer</div>
+        <div className="nav-logo">SULTHAN SHAFEER</div>
 
-        {/* Toggle for mobile */}
         <div className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)}>
           <span className={`bar ${menuOpen ? "open" : ""}`}></span>
           <span className={`bar ${menuOpen ? "open" : ""}`}></span>
           <span className={`bar ${menuOpen ? "open" : ""}`}></span>
         </div>
 
-        {/* Navigation Links */}
         <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
           <Link
             to="home"

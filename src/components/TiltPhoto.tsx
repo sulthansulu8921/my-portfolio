@@ -1,12 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, ReactNode } from "react";
 
 interface TiltPhotoProps {
-  src: string;
+  src?: string;
   alt?: string;
   extraClass?: string;
+  children?: ReactNode;
 }
 
-const TiltPhoto: React.FC<TiltPhotoProps> = ({ src, alt = "", extraClass = "" }) => {
+const TiltPhoto: React.FC<TiltPhotoProps> = ({ src, alt = "", extraClass = "", children }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -32,11 +33,11 @@ const TiltPhoto: React.FC<TiltPhotoProps> = ({ src, alt = "", extraClass = "" })
       className={`photo-card ${extraClass}`}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      role="img"
-      aria-label={alt}
+      role={src ? "img" : "group"}
+      aria-label={src ? alt : undefined}
     >
       <div className="tilt-inner">
-        <img src={src} alt={alt} className="profile-photo" />
+        {src ? <img src={src} alt={alt} className="profile-photo" /> : children}
       </div>
     </div>
   );

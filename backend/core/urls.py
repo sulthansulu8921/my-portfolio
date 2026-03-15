@@ -19,9 +19,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from core.chat_views import AIChatView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('projects.urls')),
+    path('api/chat/', AIChatView.as_view(), name='ai_chat'),
 ]
 
 if settings.DEBUG:
