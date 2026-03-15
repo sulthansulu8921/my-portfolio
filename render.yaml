@@ -23,11 +23,11 @@ services:
         value: .onrender.com,.vercel.app
 
   # Vite React Frontend
-  - type: static_site
+  - type: web
     name: my-portfolio-frontend
-    runtime: node
+    runtime: static
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
         fromService:
