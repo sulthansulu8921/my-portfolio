@@ -160,16 +160,27 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-] + os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
+# CORS configuration
+raw_cors_origins = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
+CORS_ALLOWED_ORIGIN_REGEXES = []
 
-# Remove empty strings from cors origins just in case
-CORS_ALLOWED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin]
+for origin in raw_cors_origins:
+    if not origin: continue
+    if origin == "*":
+        CORS_ALLOW_ALL_ORIGINS = True
+        break
+    if origin.startswith("."):
+        # Support wildcards via regex if it starts with a dot
+        CORS_ALLOWED_ORIGIN_REGEXES.append(rf"^https://.*\{origin}$")
+    else:
+        # Ensure scheme is present
+        if not origin.startswith(("http://", "https://")):
+            CORS_ALLOWED_ORIGINS.append(f"https://{origin}")
+        else:
+            CORS_ALLOWED_ORIGINS.append(origin)
 
-# If '*' is passed, allow all origins for now (we can lock this down later)
-if '*' in CORS_ALLOWED_ORIGINS or DEBUG:
+if DEBUG or os.environ.get("CORS_ALLOW_ALL", "False") == "True":
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ALLOWED_ORIGINS = []
     # Also allow all hosts in debug if none specified
