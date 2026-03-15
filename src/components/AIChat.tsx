@@ -48,8 +48,8 @@ const AIChat: React.FC = () => {
         setIsTyping(true);
 
         try {
-            // Using localhost instead of 127.0.0.1 to avoid CORS consistency issues
-            const response = await axios.post("http://localhost:8000/api/chat/", {
+            const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+            const response = await axios.post(`${API_BASE}/api/chat/`, {
                 message: input,
             });
 
