@@ -4,9 +4,11 @@ services:
     name: my-portfolio-backend
     runtime: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    buildCommand: pip install --no-cache-dir -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
     startCommand: gunicorn core.wsgi:application
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
       - key: DATABASE_URL
         sync: false # User must set this manually to their Supabase URL
       - key: DEBUG
