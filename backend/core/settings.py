@@ -30,7 +30,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-eb1-px@x8sxjqkfwr=4j!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,.onrender.com").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+if not any(ALLOWED_HOSTS):
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"]
+# Add the specific Render hostname if available
+if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+    ALLOWED_HOSTS.append(os.environ.get("RENDER_EXTERNAL_HOSTNAME"))
 
 
 # Application definition
@@ -144,8 +149,18 @@ CORS_ALLOWED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin]
 if '*' in CORS_ALLOWED_ORIGINS or DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ALLOWED_ORIGINS = []
+    # Also allow all hosts in debug if none specified
+    if DEBUG and not any(ALLOWED_HOSTS):
+        ALLOWED_HOSTS = ["*"]
 else:
     CORS_ALLOW_ALL_ORIGINS = False
+
+# Security settings for production
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = [
+        "https://*.onrender.com",
+        "https://*.vercel.app",
+    ] + [f"https://{origin}" for origin in CORS_ALLOWED_ORIGINS if "://" not in origin]
 # AWS S3 / Supabase Storage configuration
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
