@@ -23,7 +23,7 @@ services:
         value: .onrender.com,.vercel.app
 
   # Vite React Frontend
-  - type: static
+  - type: static_site
     name: my-portfolio-frontend
     runtime: node
     buildCommand: npm install && npm run build
