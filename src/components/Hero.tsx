@@ -92,6 +92,16 @@ const Hero = () => {
             GET IN TOUCH
           </button>
         </div>
+
+        <div className="scroll-indicator" onClick={() => scrollToSection("about")}>
+          <div className="mouse">
+            <div className="wheel"></div>
+          </div>
+          <div className="arrows">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
       </div>
       <div className="hero-background-effects">
         <div className="blob"></div>

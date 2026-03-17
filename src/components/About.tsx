@@ -55,16 +55,6 @@ const About: React.FC = () => {
                   my skills in UI/UX design and scalable architecture.
                 </p>
 
-                <div className="about-footer">
-                  <div className="stat-item">
-                    <span className="stat-number">1+</span>
-                    <span className="stat-label">Years Experience</span>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">10+</span>
-                    <span className="stat-label">Projects Built</span>
-                  </div>
-                </div>
               </div>
             </TiltPhoto>
           </motion.div>

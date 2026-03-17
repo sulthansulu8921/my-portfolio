@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getProjects } from "../services/api";
+import { staticProjects } from "../data/projects";
 import "../Projects.css";
 
 interface Project {
@@ -10,19 +11,26 @@ interface Project {
     image?: string;
     github_link?: string;
     live_link?: string;
+    tags?: string[];
 }
 
 const Projects: React.FC = () => {
-    const [projects, setProjects] = useState<Project[]>([]);
+    const [projects, setProjects] = useState<Project[]>(staticProjects);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const data = await getProjects();
-                setProjects(data);
+                const backendProjects = await getProjects();
+                if (backendProjects && backendProjects.length > 0) {
+                    // Combine static and backend projects, avoiding duplicates by ID if possible
+                    // For simplicity, we just merge them here. 
+                    // Higher IDs for backend projects might be needed or just append.
+                    setProjects([...staticProjects, ...backendProjects]);
+                }
             } catch (error) {
-                console.error("Failed to load projects", error);
+                console.error("Failed to load projects from backend", error);
+                // Keep static projects if backend fails
             } finally {
                 setLoading(false);
             }
