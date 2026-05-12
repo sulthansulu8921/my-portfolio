@@ -69,6 +69,24 @@
   width: 100%;
 }
 
+.header-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  margin-left: -0.5rem;
+  /* Slight adjustment to spacing */
+  cursor: pointer;
+}
+
+.header-social-link:hover {
+  color: #fff;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.5));
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;

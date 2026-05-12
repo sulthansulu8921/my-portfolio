@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-scroll";
+import { FaGithub } from "react-icons/fa";
 import "../Header.css";
 
 
@@ -76,6 +77,14 @@ const Header = () => {
           >
             Contact
           </Link>
+          <a
+            href="https://github.com/sulthansulu8921"
+            target="_blank"
+            rel="noreferrer"
+            className="header-social-link"
+          >
+            <FaGithub />
+          </a>
         </nav>
       </div>
     </header>

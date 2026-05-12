@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaGithub, FaLock, FaTimes } from "react-icons/fa";
 import { getProjects } from "../services/api";
 import { staticProjects } from "../data/projects";
 import "../Projects.css";
@@ -12,31 +13,55 @@ interface Project {
     github_link?: string;
     live_link?: string;
     tags?: string[];
+    isProtected?: boolean;
 }
 
 const Projects: React.FC = () => {
     const [projects, setProjects] = useState<Project[]>(staticProjects);
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [passwordInput, setPasswordInput] = useState("");
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
                 const backendProjects = await getProjects();
                 if (backendProjects && backendProjects.length > 0) {
-                    // Combine static and backend projects, avoiding duplicates by ID if possible
-                    // For simplicity, we just merge them here. 
-                    // Higher IDs for backend projects might be needed or just append.
                     setProjects([...staticProjects, ...backendProjects]);
                 }
             } catch (error) {
                 console.error("Failed to load projects from backend", error);
-                // Keep static projects if backend fails
             } finally {
                 setLoading(false);
             }
         };
         fetchProjects();
     }, []);
+
+    const handleCodeClick = (e: React.MouseEvent, project: Project) => {
+        if (project.isProtected) {
+            e.preventDefault();
+            setSelectedProject(project);
+            setIsModalOpen(true);
+            setPasswordInput("");
+            setError(false);
+        }
+    };
+
+    const handlePasswordSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Placeholder password as requested/implied
+        if (passwordInput === "Connect2025") {
+            setIsModalOpen(false);
+            if (selectedProject?.github_link) {
+                window.open(selectedProject.github_link, "_blank", "noopener,noreferrer");
+            }
+        } else {
+            setError(true);
+        }
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -97,7 +122,13 @@ const Projects: React.FC = () => {
 
                                         <div className="project-actions">
                                             {project.github_link && (
-                                                <a href={project.github_link} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
+                                                <a
+                                                    href={project.github_link}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="btn btn-outline btn-sm"
+                                                    onClick={(e) => handleCodeClick(e, project)}
+                                                >
                                                     Code
                                                 </a>
                                             )}
@@ -116,6 +147,50 @@ const Projects: React.FC = () => {
                     </motion.div>
                 )}
             </div>
+
+            <AnimatePresence>
+                {isModalOpen && (
+                    <motion.div
+                        className="password-modal-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsModalOpen(false)}
+                    >
+                        <motion.div
+                            className="password-modal glass-card"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button className="close-modal" onClick={() => setIsModalOpen(false)}>
+                                <FaTimes />
+                            </button>
+                            <div className="modal-icon">
+                                <FaLock />
+                            </div>
+                            <h3>Private Repository</h3>
+                            <p>Enter password to view <strong>{selectedProject?.title}</strong> source code.</p>
+
+                            <form onSubmit={handlePasswordSubmit}>
+                                <input
+                                    type="password"
+                                    className={`password-input ${error ? 'input-error' : ''}`}
+                                    placeholder="Enter password"
+                                    value={passwordInput}
+                                    onChange={(e) => setPasswordInput(e.target.value)}
+                                    autoFocus
+                                />
+                                {error && <p className="error-text">Incorrect password. Please try again.</p>}
+                                <button type="submit" className="btn btn-primary submit-btn">
+                                    Unlock Code
+                                </button>
+                            </form>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
