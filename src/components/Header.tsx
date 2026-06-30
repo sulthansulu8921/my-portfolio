@@ -59,6 +59,16 @@ const Header = () => {
           </Link>
 
           <Link
+            to="services"
+            smooth={true}
+            duration={600}
+            offset={-50}
+            onClick={() => setMenuOpen(false)}
+          >
+            Services
+          </Link>
+
+          <Link
             to="projects"
             smooth={true}
             duration={600}
