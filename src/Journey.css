@@ -619,6 +619,8 @@
 .modal-body {
   display: flex;
   flex-direction: column;
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
 .modal-cert-image {
@@ -673,30 +675,57 @@
 }
 
 @media (max-width: 768px) {
+  .journey-section {
+    padding: 60px 0;
+  }
+
   .journey-title {
     font-size: 2.2rem;
   }
 
   .journey-stats {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .cert-details {
+    padding: 16px;
   }
 
   .timeline-container {
-    padding-left: 24px;
+    padding-left: 20px;
   }
 
   .timeline-marker {
-    left: -29px;
+    left: -25px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .marker-inner {
+    width: 4px;
+    height: 4px;
   }
 
   .timeline-content {
-    padding: 20px;
+    padding: 16px;
   }
 
   .highlights-grid {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .cert-modal-overlay {
+    padding: 12px;
+  }
+
+  .modal-cert-details {
+    padding: 16px;
   }
 
   .modal-cert-details h3 {
