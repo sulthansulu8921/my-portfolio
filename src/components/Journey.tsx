@@ -18,6 +18,7 @@ import "../Journey.css";
 // Import certificate images
 import certificateAchievement from "../assets/certificate_achievement.png";
 import cloudPythonFundamentals from "../assets/cloud_python_fundamentals.png";
+import internshipCertificate from "../assets/internship_certificate.png";
 
 interface Certification {
   id: number;
@@ -28,7 +29,7 @@ interface Certification {
   skills: string[];
   description: string;
   icon: React.ReactNode;
-  theme: "cyan" | "blue";
+  theme: "cyan" | "blue" | "green";
 }
 
 const certifications: Certification[] = [
@@ -53,6 +54,17 @@ const certifications: Certification[] = [
     description: "Completed advanced training in cloud technologies, database management, hosting environments, and Python fundamentals.",
     icon: <SiPython />,
     theme: "blue"
+  },
+  {
+    id: 3,
+    title: "Software Developer Intern Certificate",
+    provider: "Upcode Software Labs LLP",
+    date: "17-04-2026",
+    image: internshipCertificate,
+    skills: ["HTML", "CSS", "Bootstrap", "JavaScript", "Git", "React.js", "Redux", "Next.js", "TypeScript", "Python", "Django", "Flask", "RDBMS"],
+    description: "Successfully completed full-time Software Developer Internship, contributing to production-grade applications.",
+    icon: <FaBriefcase />,
+    theme: "green"
   }
 ];
 
