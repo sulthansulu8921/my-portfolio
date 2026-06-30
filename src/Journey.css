@@ -1,0 +1,691 @@
+/* ==========================================
+   JOURNEY SECTION STYLES
+   ========================================== */
+
+.journey-section {
+  position: relative;
+  padding: 100px 0;
+  background-color: #030712; /* Very deep dark black */
+  overflow: hidden;
+  color: #f3f4f6;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Background glows */
+.journey-background-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow-orb-journey {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.12;
+}
+
+.orb-cyan-journey {
+  top: 15%;
+  left: 5%;
+  background: radial-gradient(circle, #06b6d4 0%, transparent 80%);
+}
+
+.orb-blue-journey {
+  bottom: 10%;
+  right: 5%;
+  background: radial-gradient(circle, #3b82f6 0%, transparent 80%);
+}
+
+.journey-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header */
+.journey-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.journey-badge-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: #06b6d4;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.journey-badge-top svg {
+  font-size: 1rem;
+}
+
+.journey-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 40%, #9ca3af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.journey-subtitle {
+  font-size: 1.15rem;
+  color: #9ca3af;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Stats Counter */
+.journey-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-icon-wrapper.cyan {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+}
+
+.stat-icon-wrapper.blue {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+.stat-icon-wrapper.purple {
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+}
+
+.stat-info .stat-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.stat-info .stat-label {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* Split Layout Grid */
+.journey-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.column-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 0;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+}
+
+.column-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: #06b6d4;
+  border-radius: 2px;
+}
+
+/* Certifications Cards */
+.certifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.cert-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cert-image-container {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cert-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cert-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(3, 7, 18, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.overlay-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.cert-image-container:hover .cert-thumbnail {
+  transform: scale(1.05);
+}
+
+.cert-image-container:hover .cert-image-overlay {
+  opacity: 1;
+}
+
+.cert-image-container:hover .overlay-btn {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.cert-details {
+  padding: 24px;
+}
+
+.cert-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+
+.cert-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cert-meta svg {
+  color: #06b6d4;
+}
+
+.cert-theme-blue .cert-meta svg {
+  color: #3b82f6;
+}
+
+.cert-card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.cert-desc {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+.cert-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.cert-skill-badge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d1d5db;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.cert-card:hover .cert-skill-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-view-cert {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  background: transparent;
+}
+
+.btn-view-cert.btn-theme-cyan {
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: #06b6d4;
+}
+
+.btn-view-cert.btn-theme-cyan:hover {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: #06b6d4;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+}
+
+.btn-view-cert.btn-theme-blue {
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3b82f6;
+}
+
+.btn-view-cert.btn-theme-blue:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+}
+
+/* Card Glow Hover */
+.cert-theme-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 10px 30px -15px rgba(6, 182, 212, 0.15);
+}
+
+.cert-theme-blue:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 30px -15px rgba(59, 130, 246, 0.15);
+}
+
+/* Timeline Layout */
+.timeline-container {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 50px;
+}
+
+.timeline-bar {
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #06b6d4 0%, #3b82f6 50%, rgba(59, 130, 246, 0) 100%);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -41px;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #030712;
+  border: 2px solid #06b6d4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+
+.marker-inner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #06b6d4;
+}
+
+.timeline-content {
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-header-block {
+  margin-bottom: 18px;
+}
+
+.internship-badge-tag {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.intern-role {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.intern-company {
+  font-size: 1.05rem;
+  color: #06b6d4;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+}
+
+.intern-duration {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.intern-duration svg {
+  color: #3b82f6;
+}
+
+.intern-desc {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.sub-header-timeline {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+}
+
+.intern-responsibilities {
+  margin-bottom: 24px;
+}
+
+.resp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resp-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+
+.resp-bullet-icon {
+  color: #06b6d4;
+  margin-top: 3px;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.timeline-tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.timeline-tech-badge {
+  background: rgba(6, 182, 212, 0.05);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  color: #06b6d4;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Highlights Grid */
+.subtitle-highlights {
+  margin-top: 40px !important;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: default;
+}
+
+.highlight-trophy {
+  font-size: 1.25rem;
+}
+
+.highlight-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+/* ==========================================
+   CERTIFICATE MODAL STYLES
+   ========================================== */
+
+.cert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.cert-modal-content {
+  max-width: 900px;
+  width: 100%;
+  background: #0b0f19;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.cert-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.cert-modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ff4b4b;
+  transform: scale(1.05);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-cert-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  max-height: 520px;
+  background: #030712;
+  padding: 10px;
+}
+
+.modal-cert-details {
+  padding: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-cert-details h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+
+.modal-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 14px;
+}
+
+.modal-meta strong {
+  color: #ffffff;
+}
+
+.modal-cert-details p {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==========================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .journey-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .journey-title {
+    font-size: 2.2rem;
+  }
+
+  .journey-stats {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .timeline-container {
+    padding-left: 24px;
+  }
+
+  .timeline-marker {
+    left: -29px;
+  }
+
+  .timeline-content {
+    padding: 20px;
+  }
+
+  .highlights-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-cert-details h3 {
+    font-size: 1.3rem;
+  }
+
+  .modal-meta {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

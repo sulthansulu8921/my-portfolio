@@ -8,6 +8,7 @@ import Education from "./components/Education";
 import Skills from "./components/Skills";
 import Services from "./components/Services";
 import Projects from "./components/Projects";
+import Journey from "./components/Journey";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import AIChat from "./components/AIChat";
@@ -31,6 +32,7 @@ const App: React.FC = () => {
             <Skills />
             <Services />
             <Projects />
+            <Journey />
             <Contact />
             <Footer />
             <AIChat />
